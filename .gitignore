@@ -1,0 +1,8 @@
+# IntelliJ
+
+.idea
+spring-kafka-integration-test.iml
+
+# Maven
+
+target

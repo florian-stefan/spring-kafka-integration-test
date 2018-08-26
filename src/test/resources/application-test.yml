@@ -1,0 +1,1 @@
+kafka.bootstrap.servers: ${docker.kafka.host}:9092
