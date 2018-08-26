@@ -3,6 +3,7 @@ package com.ebay.kleinanzeigen.spring_kafka_integration_test;
 import static com.ebay.kleinanzeigen.spring_kafka_integration_test.MessageListener.GROUP_ID;
 import static com.ebay.kleinanzeigen.spring_kafka_integration_test.MessageListener.TOPIC;
 import static java.util.Collections.singletonList;
+import static java.util.Optional.ofNullable;
 import static java.util.UUID.randomUUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -10,6 +11,7 @@ import static org.mockito.Mockito.doThrow;
 
 import java.util.Optional;
 import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -105,7 +107,7 @@ public class MessageListenerRetryIT {
   }
 
   private long getCommittedOffset() {
-    return consumer.committed(PARTITION).offset();
+    return ofNullable(consumer.committed(PARTITION)).map(OffsetAndMetadata::offset).orElse(0L);
   }
 
   private Long getEndOffset() {
