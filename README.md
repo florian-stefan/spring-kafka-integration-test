@@ -47,5 +47,5 @@ consumes messages from the Kafka topic.
 There are several ways to fix this problem. One is to not cache Spring contexts at all. This can be achieved by using
 the annotation `@DirtiesContext`. Since disabling the caching of contexts can have an impact on the execution time of
 integrations tests, it is worth considering another option: it is possible to stop the Kafka listener containers after
-each test and to start them before each tests. This will allow the Kafka broker to reassign the one topic partition to
-the consumer that is used by the currently running test.
+each test and to start them before each tests. This will allow the Kafka broker to reassign the one topic partition that
+is used in our integration test scenario to the consumer that is used by the currently running test.
