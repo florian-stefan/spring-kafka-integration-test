@@ -43,7 +43,7 @@ public class MessageListenerRetryIT {
   private KafkaTemplate<String, String> kafkaTemplate;
 
   @SpyBean
-  private MessageRepository messageRepository;
+  private MessageProcessor messageProcessor;
 
   private MessageListenerContainer kafkaListener;
 
@@ -65,7 +65,7 @@ public class MessageListenerRetryIT {
   public void shouldNotCommitOffsetOnError() {
     givenKafkaListenerAndConsumer();
     givenCommittedOffsetAfterConsumingPreviousMessages();
-    givenExceptionWhenSavingMessage("error_message");
+    givenExceptionWhenEnrichingMessage("error_message");
 
     sendMessages("first_message", "second_message", "third_message", "error_message", "fourth_message");
 
@@ -87,10 +87,10 @@ public class MessageListenerRetryIT {
     committedOffsetBeforeConsumingMessages = getCommittedOffset();
   }
 
-  private void givenExceptionWhenSavingMessage(String message) {
-    RuntimeException exception = new RuntimeException("The message " + message + " could not be saved.");
+  private void givenExceptionWhenEnrichingMessage(String message) {
+    RuntimeException exception = new RuntimeException("The message " + message + " could not be enriched.");
 
-    doThrow(exception).when(messageRepository).saveMessage(KEY, message);
+    doThrow(exception).when(messageProcessor).enrichMessage(message);
   }
 
   private void sendMessages(String... messages) {

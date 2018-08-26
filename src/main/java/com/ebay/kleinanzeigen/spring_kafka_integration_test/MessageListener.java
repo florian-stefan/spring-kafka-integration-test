@@ -15,11 +15,14 @@ public class MessageListener {
   public static final String GROUP_ID = "message-group";
   public static final String TOPIC = "messages";
 
+  private final MessageProcessor messageProcessor;
   private final MessageRepository messageRepository;
 
   @KafkaListener(groupId = GROUP_ID, topics = TOPIC)
   public void handleAdScoredEvent(@Header(RECEIVED_MESSAGE_KEY) String key, @Payload String message) {
-    messageRepository.saveMessage(key, message);
+    String enrichedMessage = messageProcessor.enrichMessage(message);
+
+    messageRepository.saveMessage(key, enrichedMessage);
   }
 
 }

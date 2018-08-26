@@ -63,7 +63,7 @@ public class MessageListenerIT {
     sendMessages("first_message", "second_message", "third_message", "fourth_message");
 
     assertThatOffsetWasCommittedFor("first_message", "second_message", "third_message", "fourth_message");
-    assertThatMessagesHaveBeenSaved("first_message", "second_message", "third_message", "fourth_message");
+    assertThatMessagesHaveBeenSaved("<first_message>", "<second_message>", "<third_message>", "<fourth_message>");
   }
 
   private void givenKafkaConsumer() {
