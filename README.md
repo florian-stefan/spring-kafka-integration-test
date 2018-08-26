@@ -28,3 +28,23 @@ that all instances of this listener connected to the same Kafka cluster will be 
 the topic that is used for the integration tests has only one partition, that also implies that - when several Spring
 contexts exists in parallel during integration testing - at most one Spring context will contain a non-idle instance of
 that listener.
+
+### Caching the Spring context during integration testing
+
+After loading an `ApplicationContext` for a test, the Spring test framework will cache that context and reuse it for
+all subsequent tests that declare the same unique context configuration within the same test suite. When the Spring
+context is cached, the instance of the `MessageListener` that is managed by that context will keep its topic assignment.
+That means that every subsequent integration test that does not reuse the cached context will run with a Spring context
+that contains an idle instance of the `MessageListener`.
+
+Since the annotations `@MockBean` or `@SpyBean` will alter the cache key of the context, an integration test that uses
+those annotations will run with a fresh Spring context while the cached context is still active. Therefore, such
+integration tests will fail if they require that the `MessageListener` consumes messages from the Kafka topic.
+
+### Solving the idle Kafka consumer problem
+
+There are several ways to fix this problem. One is to not cache Spring contexts at all. This can be achieved by using
+the annotation `@DirtiesContext`. Since disabling the caching of contexts can have an impact on the execution time of
+integrations tests, it is worth considering another option: it is possible to stop the Kafka listener containers after
+each test and to start them before each tests. This will allow the Kafka broker to reassign the one topic partition to
+the consumer that is used by the currently running test.
