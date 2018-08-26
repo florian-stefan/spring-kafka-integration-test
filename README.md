@@ -39,7 +39,8 @@ context that contains an idle instance of the `MessageListener`.
 
 Since the annotations `@MockBean` or `@SpyBean` will alter the cache key of the context, an integration test that uses
 those annotations will run with a fresh Spring context while the cached context is still active. Therefore, such
-integration tests will fail if they require that the `MessageListener` consumes messages from the Kafka topic.
+integration tests will fail if they require that the `MessageListener` that is managed by the context of that test
+consumes messages from the Kafka topic.
 
 ### Solving the idle Kafka consumer problem
 
