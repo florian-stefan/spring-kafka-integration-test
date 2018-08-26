@@ -13,10 +13,13 @@ import java.util.Optional;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.context.Lifecycle;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -47,6 +50,16 @@ public class MessageListenerRetryIT {
   private Consumer<String, String> consumer;
 
   private long committedOffsetBeforeConsumingMessages;
+
+  @Before
+  public void startKafkaListener() {
+    kafkaListenerRegistry.getListenerContainers().forEach(Lifecycle::start);
+  }
+
+  @After
+  public void stopKafkaListener() {
+    kafkaListenerRegistry.getListenerContainers().forEach(Lifecycle::stop);
+  }
 
   @Test
   public void shouldNotCommitOffsetOnError() {
