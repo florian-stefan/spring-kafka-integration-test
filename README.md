@@ -33,9 +33,9 @@ that listener.
 
 After loading an `ApplicationContext` for a test, the Spring test framework will cache that context and reuse it for
 all subsequent tests that declare the same unique context configuration within the same test suite. When the Spring
-context is cached, the instance of the `MessageListener` that is managed by that context will keep its topic assignment.
-That means that every subsequent integration test that does not reuse the cached context will run with a Spring context
-that contains an idle instance of the `MessageListener`.
+context is cached, the instance of the `MessageListener` that is managed by that context will keep its topic partition
+assignment. That means that each subsequent integration test that does not reuse the cached context will run with a Spring
+context that contains an idle instance of the `MessageListener`.
 
 Since the annotations `@MockBean` or `@SpyBean` will alter the cache key of the context, an integration test that uses
 those annotations will run with a fresh Spring context while the cached context is still active. Therefore, such
