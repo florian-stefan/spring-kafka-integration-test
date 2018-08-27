@@ -19,7 +19,7 @@ public class MessageListener {
   private final MessageRepository messageRepository;
 
   @KafkaListener(groupId = GROUP_ID, topics = TOPIC)
-  public void handleAdScoredEvent(@Header(RECEIVED_MESSAGE_KEY) String key, @Payload String message) {
+  public void handleMessage(@Header(RECEIVED_MESSAGE_KEY) String key, @Payload String message) {
     String enrichedMessage = messageProcessor.enrichMessage(message);
 
     messageRepository.saveMessage(key, enrichedMessage);
