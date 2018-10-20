@@ -1,4 +1,4 @@
-package com.ebay.kleinanzeigen.spring_kafka_integration_test;
+package florian_stefan.spring_kafka_integration_test;
 
 import java.util.HashMap;
 import java.util.Map;

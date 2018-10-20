@@ -1,4 +1,4 @@
-package com.ebay.kleinanzeigen.spring_kafka_integration_test;
+package florian_stefan.spring_kafka_integration_test;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

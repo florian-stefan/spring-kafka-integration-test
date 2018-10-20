@@ -1,4 +1,4 @@
-# Spring Kafka Integration Test Example
+# Spring Kafka Integration Test
 
 This repository contains example code for setting up an integration test for Spring Kafka using a Kafka broker running
 in a Docker container and for demonstrating a potential pitfall when using the annotations `@MockBean` or `@SpyBean`.

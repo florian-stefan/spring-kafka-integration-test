@@ -1,4 +1,4 @@
-package com.ebay.kleinanzeigen.spring_kafka_integration_test;
+package florian_stefan.spring_kafka_integration_test;
 
 import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
